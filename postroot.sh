@@ -60,7 +60,7 @@ echo "<INFO> Plugin SBIN folder is: $PSBIN"
 echo "<INFO> Plugin BIN folder is: $PBIN"
 
 # Sicherstellen, dass das PHP-Skript ausführbar ist
-chmod +x $PBIN/myplugin.php
+chmod +x $PBIN/neoomAPI.php
 
 # Systemd Service erstellen
 SERVICE_FILE="/etc/systemd/system/neoomAPI.service"
