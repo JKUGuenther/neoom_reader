@@ -70,6 +70,7 @@ After=network.target
 
 [Service]
 ExecStart=/usr/bin/php $PBIN/neoomAPI.php
+WorkingDirectory=/opt/loxberry/bin/plugins/neoom_reader
 Restart=always
 
 [Install]
@@ -80,7 +81,7 @@ systemctl daemon-reload
 systemctl enable neoomAPI.service
 systemctl start neoomAPI.service
 
-
+journalctl -u neoomAPI.service
 
 # Exit with Status 0
 exit 0
