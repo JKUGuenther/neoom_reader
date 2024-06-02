@@ -59,5 +59,28 @@ echo "<INFO> Plugin CONFIG folder is: $PCONFIG"
 echo "<INFO> Plugin SBIN folder is: $PSBIN"
 echo "<INFO> Plugin BIN folder is: $PBIN"
 
+# Sicherstellen, dass das PHP-Skript ausführbar ist
+chmod +x $PBIN/myplugin.php
+
+# Systemd Service erstellen
+SERVICE_FILE="/etc/systemd/system/neoomAPI.service"
+echo "[Unit]
+Description=neoomAPI Service
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/php $PBIN/neoomAPI.php
+Restart=always
+
+[Install]
+WantedBy=multi-user.target" > $SERVICE_FILE
+
+# Service aktivieren und starten
+systemctl daemon-reload
+systemctl enable neoomAPI.service
+systemctl start neoomAPI.service
+
+
+
 # Exit with Status 0
 exit 0
