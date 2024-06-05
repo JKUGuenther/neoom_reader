@@ -70,7 +70,7 @@ After=network.target
 
 [Service]
 ExecStart=/usr/bin/php $PBIN/neoomAPI.php
-WorkingDirectory=/opt/loxberry/bin/plugins/neoom_reader
+WorkingDirectory=/opt/loxberry/libs/phplib
 Restart=always
 
 [Install]

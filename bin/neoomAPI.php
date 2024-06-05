@@ -6,12 +6,15 @@ require_once "Config/Lite.php";
 require_once "$lbphtmldir/neoom_api.class.php";
 require_once "$lbphtmldir/functions.inc.php";
 
-$miniserverIP = "";
+$miniserverIP = "192.168.178.201";
 $log = Null;
 $neoomCfg = Null;
 $Neoom = Null;
 $msArray = Null;
 $msID = 0;
+
+while (true) {
+
 
 // Creates a log object, automatically assigned to your plugin, with the group name "NeoomLog"
 $log = LBLog::newLog( [ "name" => "NeoomLog", "package" => $lbpplugindir, "logdir" => $lbplogdir, "loglevel" => 6] );
@@ -53,9 +56,17 @@ $dataToSend = json_encode($result);
 #$session_neoom->logout();
 LOGOK("Data API:".$dataToSend);
 //Tansfer Data
-sendUDP($dataToSend, "192.168.178.201", $neoomCfg->get("NEOOM","UDPPORT"));
+sendUDP($dataToSend, $miniserverIP , $neoomCfg->get("NEOOM","UDPPORT"));
 
 LOGOK("Data sent to Miniserver:".$neoomCfg->get("NEOOM","UDPPORT"));
 
+
+
+sleep(10); // Warte 10 Sekunden vor der nächsten Abfrage
+LOGOK("After sleeping");
+
 LOGEND("Processing terminated");
+
+}
+
 ?>
