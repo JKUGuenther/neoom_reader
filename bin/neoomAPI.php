@@ -42,14 +42,14 @@ if ($neoomCfg->get("NEOOM","ENABLED")){
 	exit;
 }
 
-$msArray = LBSystem::get_miniservers();
-$msID = $neoomCfg->get("NEOOM","MINISERVER");
-#$miniserverIP = $msArray[$msID]['IPAddress'];
+//$msArray = LBSystem::get_miniservers();
+//$msID = $neoomCfg->get("NEOOM","MINISERVER");
+//$miniserverIP = $msArray[$msID]['IPAddress'];
 
 //Neues Neoom Objekt anlegen. Username und Passwort werden aus cfg Datei gelesen.
 $session_neoom = new neoom_api();
 #$session_neoom->login($neoomCfg->get("NEOOM","USERNAME"), $neoomCfg->get("NEOOM","PASSWORD"));
-$session_neoom->login($neoomCfg->get("NEOOM","APIKEY"), $neoomCfg->get("NEOOM","SID"));
+$session_neoom->login($neoomCfg->get("NEOOM","APIKEY"), $neoomCfg->get("NEOOM","BEAAMIP"));
 $result = $session_neoom->get_api();
 
 $dataToSend = json_encode($result);

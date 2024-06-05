@@ -3,21 +3,19 @@
  
 class neoom_api {
 
-	protected $url_api_im = 'https://api.ntuity.io/v1/sites/';
-	protected $url_api_track = 'https://api.ntuity.io/v1/sites/id/energy-flow/latest';
 	protected $apikey;
 	protected $sid;
 	protected $token;
-	protected $provider;
+	protected $beaamIP;
 	
 
-	function login($apikey, $sid)
+	function login($apikey, $beaamIP)
 	{
 		
         LOGDEB("Calling Logon to NEOOM API");	
 		
         $this->apikey = $apikey;
-        $this->sid = $sid;
+		$this->beaamIP = $beaamIP;
 		
 	}
 
@@ -29,7 +27,6 @@ class neoom_api {
 			    'Content-type: application/json',
 			    'Accept: application/json',
 				'Authorization: Bearer '.$this->apikey
-				#'Authorization-Provider: '.$this->provider
 			);
 		}
 		else
@@ -63,11 +60,11 @@ class neoom_api {
 	
 	function get_api()
 	{
-		
+		$url_api  = sprintf("http://%s/api/v1/site/state", $this->beaamIP);
 		$curl = curl_init();
 
 		curl_setopt_array($curl, [
-		  CURLOPT_URL => $this->url_api_im . $this->sid ,
+		  CURLOPT_URL => $url_api ,
 		  CURLOPT_RETURNTRANSFER => true,
 		  CURLOPT_ENCODING => "",
 		  CURLOPT_MAXREDIRS => 10,
