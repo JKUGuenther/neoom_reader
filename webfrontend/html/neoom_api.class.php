@@ -58,9 +58,16 @@ class neoom_api {
 	} */
 
 	
-	function get_api()
+	function get_api($thingID)
 	{
 		$url_api  = sprintf("http://%s/api/v1/site/state", $this->beaamIP);
+		if (empty($thingID)) {
+		  $url_api  = sprintf("http://%s/api/v1/site/state", $this->beaamIP);
+		}
+		else {
+		  $url_api  = sprintf("http://%s/api/v1/things/%s/states", $this->beaamIP, $thingID);
+		}
+
 		$curl = curl_init();
 
 		curl_setopt_array($curl, [

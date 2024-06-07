@@ -13,6 +13,7 @@ $Neoom = Null;
 $msArray = Null;
 $msID = 0;
 
+
 // Creates a log object, automatically assigned to your plugin, with the group name "NeoomLog"
 $log = LBLog::newLog( [ "name" => "NeoomLog", "package" => $lbpplugindir, "logdir" => $lbplogdir, "loglevel" => 6] );
 // After log object is created, logging is started with LOGSTART
@@ -47,15 +48,35 @@ if ($neoomCfg->get("NEOOM","ENABLED")){
 $session_neoom = new neoom_api();
 #$session_neoom->login($neoomCfg->get("NEOOM","USERNAME"), $neoomCfg->get("NEOOM","PASSWORD"));
 $session_neoom->login($neoomCfg->get("NEOOM","APIKEY"), $neoomCfg->get("NEOOM","BEAAMIP"));
-$result = $session_neoom->get_api();
 
-$dataToSend = json_encode($result);
-#$session_neoom->logout();
-LOGOK("Data API:".$dataToSend);
-//Tansfer Data
-sendUDP($dataToSend, $miniserverIP, $neoomCfg->get("NEOOM","UDPPORT"));
+$result1 = json_encode($session_neoom->get_api(""));
 
-LOGOK("From the loxberry webview: Data sent to Miniserver:".$neoomCfg->get("NEOOM","UDPPORT"));
+$result2 = json_encode($session_neoom->get_api($neoomCfg->get("NEOOM","BAT")));
+
+$result3 = json_encode($session_neoom->get_api($neoomCfg->get("NEOOM","PV1")));
+
+$result4 = json_encode($session_neoom->get_api($neoomCfg->get("NEOOM","PV2")));
+
+$result5 = json_encode($session_neoom->get_api($neoomCfg->get("NEOOM","PV3")));
+
+echo $result1.$result2.$result3.$result4.$result5;
+sleep(1);
+sendUDP($result1, $miniserverIP , $neoomCfg->get("NEOOM","UDPPORT"));
+sleep(1);
+sendUDP($result2, $miniserverIP , $neoomCfg->get("NEOOM","UDPPORT"));
+sleep(1);
+sendUDP($result3, $miniserverIP , $neoomCfg->get("NEOOM","UDPPORT"));
+sleep(1);
+sendUDP($result4, $miniserverIP , $neoomCfg->get("NEOOM","UDPPORT"));
+sleep(1);
+sendUDP($result5, $miniserverIP , $neoomCfg->get("NEOOM","UDPPORT"));
+
+LOGOK("Data sent to Miniserver:".$neoomCfg->get("NEOOM","UDPPORT"));
+
+//sleep(10); // Warte 10 Sekunden vor der nächsten Abfrage
 
 LOGEND("Processing terminated");
+
+
+
 ?>
